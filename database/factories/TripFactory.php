@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Factories;
 
 use App\Models\{Company, Driver, Vehicle};
@@ -10,8 +9,9 @@ class TripFactory extends Factory
 {
     public function definition(): array
     {
-        $start = Carbon::now()->addHours(rand(1, 72));
-        $end = (clone $start)->addHours(rand(1, 6));
+        // كل رحلة مدتها ساعتين
+        $start = Carbon::now()->addDays(rand(1, 30))->setTime(rand(6, 18), 0);
+        $end   = (clone $start)->addHours(2);
 
         return [
             'company_id' => Company::factory(),
