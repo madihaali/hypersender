@@ -3,54 +3,57 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CompanyResource\Pages;
-use App\Filament\Resources\CompanyResource\RelationManagers;
 use App\Models\Company;
 use Filament\Forms;
-use Filament\Forms\Form;
+use Filament\Forms\Form; 
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CompanyResource extends Resource
 {
     protected static ?string $model = Company::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationGroup = 'Management';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('name')
+                ->label('Company Name')
+                ->required()
+                ->maxLength(255),
+
+            Forms\Components\Textarea::make('notes')
+                ->label('Notes')
+                ->rows(3),
+
+            Forms\Components\Toggle::make('active')
+                ->label('Active')
+                ->default(true),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+        return $table->columns([
+            Tables\Columns\TextColumn::make('id')->sortable(),
+            Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
+            Tables\Columns\IconColumn::make('active')->boolean(),
+            Tables\Columns\TextColumn::make('created_at')->dateTime(),
+        ])
+        ->filters([])
+        ->actions([
+            Tables\Actions\EditAction::make(),
+        ])
+        ->bulkActions([
+            Tables\Actions\DeleteBulkAction::make(),
+        ]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
