@@ -9,8 +9,12 @@ class Vehicle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['company_id', 'name'];
-
+       protected $fillable = [
+        'company_id',
+        'name',
+        'plate_number',
+        'active',
+    ];
     public function company()
     {
         return $this->belongsTo(Company::class);

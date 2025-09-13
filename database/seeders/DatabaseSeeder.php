@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +25,13 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
 {
+      User::updateOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('password'), // غيّر الباسورد هنا
+            ]
+        );
     \App\Models\Company::factory(3)->create()->each(function ($company) {
         $drivers = \App\Models\Driver::factory(5)->create([
             'company_id' => $company->id,
