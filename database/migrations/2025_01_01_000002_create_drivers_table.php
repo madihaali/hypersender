@@ -11,7 +11,10 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->boolean('active')->default(true); // 
+            $table->string('email')->unique();
+            $table->string('phone')->unique();
+            $table->string('license_number')->unique();
+            $table->boolean('active')->default(true); 
             $table->timestamps();
         });
     }

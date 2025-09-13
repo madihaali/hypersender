@@ -12,7 +12,9 @@ return new class extends Migration {
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->string('plate_number')->unique();
-            $table->boolean('active')->default(true); // 
+            $table->string('model');
+            $table->string('color');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
